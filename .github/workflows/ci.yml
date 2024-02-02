@@ -21,7 +21,6 @@ env:
   S2N_UNSTABLE_CRYPTO_OPT_TX: 100
   S2N_UNSTABLE_CRYPTO_OPT_RX: 100
 
-
 # By default depandabot only receives read permissions. Explicitly give it write
 # permissions which is needed by the ouzi-dev/commit-status-updater task.
 #
