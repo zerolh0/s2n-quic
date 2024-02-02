@@ -32,7 +32,7 @@ permissions:
 
 jobs:
   env:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     outputs:
       rust-versions: ${{ steps.definitions.outputs.versions }}
       msrv: ${{ steps.definitions.outputs.msrv }}
@@ -69,7 +69,7 @@ jobs:
           echo "crates=$CRATES" >> $GITHUB_OUTPUT
 
   rustfmt:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     steps:
       - uses: actions/checkout@v4
         with:
@@ -90,7 +90,7 @@ jobs:
           args: --all -- --check
 
   clippy:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     strategy:
       fail-fast: false
       matrix:
@@ -132,7 +132,7 @@ jobs:
           args: --all-features --all-targets -- -A clippy::derive_partial_eq_without_eq -A clippy::manual_clamp ${{ matrix.args }}
 
   udeps:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     steps:
       - uses: actions/checkout@v4
         with:
@@ -163,7 +163,7 @@ jobs:
           RUSTC_WRAPPER: ""
 
   doc:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     steps:
       - uses: actions/checkout@v4
         with:
@@ -217,7 +217,7 @@ jobs:
   miri:
     # miri needs quite a bit of memory so use a larger instance
     runs-on:
-      labels: codebuild-ubuntu-large
+      labels: codebuild-ubuntu-medium
     strategy:
       fail-fast: false
       matrix:
@@ -246,7 +246,7 @@ jobs:
           MIRIFLAGS: -Zmiri-disable-isolation
 
   no_std:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     steps:
       - uses: actions/checkout@v4
         with:
@@ -265,7 +265,7 @@ jobs:
         run: ./scripts/test_no_std ${{ env.RUST_NIGHTLY_TOOLCHAIN }}
 
   compliance:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     steps:
       - uses: actions/checkout@v4
         with:
@@ -281,7 +281,7 @@ jobs:
           cdn: $CDN
 
   coverage:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     steps:
       - uses: actions/checkout@v4
         with:
@@ -345,7 +345,7 @@ jobs:
   # otherwise release to crates.io will be blocked
   crates:
     needs: env
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     strategy:
       fail-fast: false
       matrix:
@@ -376,7 +376,7 @@ jobs:
 
   examples:
     needs: env
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     strategy:
       fail-fast: false
       matrix:
@@ -427,7 +427,7 @@ jobs:
         run: cargo build
 
   recovery-simulations:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     steps:
       - uses: actions/checkout@v4
         with:
@@ -476,7 +476,7 @@ jobs:
           url: "${{ steps.s3.outputs.URL }}"
 
   sims:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     steps:
       - uses: actions/checkout@v4
         with:
@@ -531,7 +531,7 @@ jobs:
           url: "${{ steps.s3.outputs.URL }}"
 
   copyright:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     steps:
       - uses: actions/checkout@v4
 
@@ -541,7 +541,7 @@ jobs:
 
   # ensures the event codegen is up to date
   events:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     steps:
       - uses: actions/checkout@v4
         with:
@@ -568,7 +568,7 @@ jobs:
 
   # ensures there are no unused snapshots
   snapshots:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     steps:
       - uses: actions/checkout@v4
         with:
@@ -606,7 +606,7 @@ jobs:
   # generates a report of time spent in compilation
   # https://doc.rust-lang.org/stable/cargo/reference/timings.html
   timing:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     steps:
       - uses: actions/checkout@v4
         with:
@@ -654,7 +654,7 @@ jobs:
           url: "${{ steps.s3.outputs.URL }}"
 
   typos:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     steps:
       - uses: actions/checkout@v4
         with:
@@ -679,7 +679,7 @@ jobs:
           ! grep -q '[^[:space:]]' /tmp/typos.json
 
   kani:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     strategy:
       fail-fast: false
       matrix:
@@ -702,7 +702,7 @@ jobs:
           args: --tests -Z stubbing
 
   dhat:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     steps:
       - uses: actions/checkout@v4
       - name: Setup cmake
@@ -765,7 +765,7 @@ jobs:
           url: "${{ steps.s3.outputs.URL }}"
 
   loom:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     strategy:
       matrix:
         crate: [quic/s2n-quic-core]
@@ -792,7 +792,7 @@ jobs:
           RUSTFLAGS: --cfg loom -Cdebug-assertions
 
   xdp:
-    runs-on: codebuild-ubuntu-large
+    runs-on: codebuild-ubuntu-medium
     steps:
       - uses: actions/checkout@v4
         with:
