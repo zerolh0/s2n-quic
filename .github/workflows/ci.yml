@@ -14,7 +14,7 @@ env:
   RUSTUP_MAX_RETRIES: 10
   RUST_BACKTRACE: 1
   # Pin the nightly toolchain to prevent breakage.
-  # This should be occasionally updated.
+  # This should be occasionally updated. 
   RUST_NIGHTLY_TOOLCHAIN: nightly-2023-11-27
   CDN: https://dnglbrstg7yg.cloudfront.net
   # enable unstable features for testing
